@@ -68,32 +68,32 @@ class SegmentGenerator {
                 let rightSide = Line(start: CGPoint(x: rect.maxX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 let bottomSide = Line(start: CGPoint(x: rect.minX, y: rect.maxY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 
-                intersection1 = line.intersection(rightSide)
-                intersection2 = line.intersection(bottomSide)
+                intersection1 = line.intersection(with: rightSide)
+                intersection2 = line.intersection(with: bottomSide)
                 
             } else if angle > CGFloat.pi/2 && angle <= CGFloat.pi {
                 // Angles in this cuadrant point left and down
                 let leftSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.minX, y: rect.maxY))
                 let bottomSide = Line(start: CGPoint(x: rect.minX, y: rect.maxY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 
-                intersection1 = line.intersection(leftSide)
-                intersection2 = line.intersection(bottomSide)
+                intersection1 = line.intersection(with: leftSide)
+                intersection2 = line.intersection(with: bottomSide)
                 
             } else if angle > CGFloat.pi && angle <= 3 * CGFloat.pi/2 {
                 // Angles in this cuadrant point left and up
                 let leftSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.minX, y: rect.maxY))
                 let topSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.minY))
                 
-                intersection1 = line.intersection(leftSide)
-                intersection2 = line.intersection(topSide)
+                intersection1 = line.intersection(with: leftSide)
+                intersection2 = line.intersection(with: topSide)
                 
             } else {
                 // Angles in this cuadrant point right and up
                 let rightSide = Line(start: CGPoint(x: rect.maxX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 let topSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.minY))
                 
-                intersection1 = line.intersection(rightSide)
-                intersection2 = line.intersection(topSide)
+                intersection1 = line.intersection(with: rightSide)
+                intersection2 = line.intersection(with: topSide)
             }
             
             var maxRho = maxLength

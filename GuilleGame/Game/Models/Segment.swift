@@ -59,10 +59,17 @@ struct Segment {
     }
     
     func shortestDistance(to point:CGPoint) -> CGFloat {
-        // TODO: fix this!!
-        let yDiff = self.end.y - self.start.y
-        let xDiff = self.end.x - self.start.x
+        let line = Line(start: self.start, end: self.end)
+        let perpendicular = Line(point: point, angle: line.angle() + CGFloat.pi/2)
         
-        return abs(yDiff * point.x - xDiff * point.y + self.end.x * self.start.y - self.start.x * self.end.y) / sqrt(pow(yDiff, 2) + pow(xDiff, 2))
+        let intersection = line.intersection(with: perpendicular)!
+        
+        if self.contains(intersection) {
+            return line.shortestDistance(to: point)
+        }
+        
+        let dist1 = sqrt(pow(self.start.x - point.x, 2) + pow(self.start.y - point.y, 2))
+        let dist2 = sqrt(pow(self.end.x - point.x, 2) + pow(self.end.y - point.y, 2))
+        return min(dist1, dist2)
     }
 }

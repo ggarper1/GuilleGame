@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9955035E2E78083D002BB918 /* GuilleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuilleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9955036B2E78083E002BB918 /* GuilleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GuilleGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		995503752E78083E002BB918 /* GuilleGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GuilleGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9955035E2E78083D002BB918 /* GuilleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GuilleGame.app; path = "/Users/guille/Documents/Projects/GuilleGame/build/Debug-iphoneos/GuilleGame.app"; sourceTree = "<absolute>"; };
+		9955036B2E78083E002BB918 /* GuilleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GuilleGameTests.xctest; path = "/Users/guille/Documents/Projects/GuilleGame/build/Debug-iphoneos/GuilleGame.app/PlugIns/GuilleGameTests.xctest"; sourceTree = "<absolute>"; };
+		995503752E78083E002BB918 /* GuilleGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GuilleGameUITests.xctest; path = "/Users/guille/Documents/Projects/GuilleGame/build/Debug-iphoneos/GuilleGameUITests-Runner.app/PlugIns/GuilleGameUITests.xctest"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -66,18 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				995503602E78083D002BB918 /* GuilleGame */,
-				9955035F2E78083D002BB918 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		9955035F2E78083D002BB918 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9955035E2E78083D002BB918 /* GuilleGame.app */,
-				9955036B2E78083E002BB918 /* GuilleGameTests.xctest */,
-				995503752E78083E002BB918 /* GuilleGameUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,7 +167,7 @@
 			mainGroup = 995503552E78083D002BB918;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 9955035F2E78083D002BB918 /* Products */;
+			productRefGroup = 995503552E78083D002BB918;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

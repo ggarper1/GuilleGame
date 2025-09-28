@@ -18,7 +18,7 @@ struct Line {
     
     init(point: CGPoint, angle: CGFloat) {
         self.start = point
-        self.end = CGPoint(x: point.x + cos(angle) * 2, y: point.y + sin(angle) * 2)
+        self.end = CGPoint(x: point.x + cos(angle), y: point.y + sin(angle))
     }
     
     var length: CGFloat {
@@ -27,7 +27,11 @@ struct Line {
         return sqrt(dx * dx + dy * dy)
     }
     
-    func intersection(_ line:Line) -> CGPoint? {
+    func angle() -> CGFloat{
+        return atan2(self.end.y - self.start.y, self.end.x - self.start.x)
+    }
+    
+    func intersection(with line:Line) -> CGPoint? {
         ///
         ///     Returns the intersection point of two infinite lines if it exists
         ///
