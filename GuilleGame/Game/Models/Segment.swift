@@ -44,7 +44,7 @@ struct Segment {
             let uNumerator = (self.start.x - self.end.x) * (self.start.y - segment.start.y) - (self.start.y - self.end.y) * (self.start.x - segment.start.x)
             
             let t = tNumerator/denominator
-            let u = uNumerator/denominator
+            let u = -uNumerator/denominator
             
             return 0 <= t && t <= 1 && 0 <= u && u <= 1
         } else {
