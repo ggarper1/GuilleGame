@@ -35,16 +35,6 @@
 			path = GuilleGame;
 			sourceTree = "<group>";
 		};
-		9955036E2E78083E002BB918 /* GuilleGameTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = GuilleGameTests;
-			sourceTree = "<group>";
-		};
-		995503782E78083E002BB918 /* GuilleGameUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = GuilleGameUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				995503602E78083D002BB918 /* GuilleGame */,
-				9955036E2E78083E002BB918 /* GuilleGameTests */,
-				995503782E78083E002BB918 /* GuilleGameUITests */,
 				9955035F2E78083D002BB918 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -130,9 +118,6 @@
 			dependencies = (
 				9955036D2E78083E002BB918 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				9955036E2E78083E002BB918 /* GuilleGameTests */,
-			);
 			name = GuilleGameTests;
 			packageProductDependencies = (
 			);
@@ -152,9 +137,6 @@
 			);
 			dependencies = (
 				995503772E78083E002BB918 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				995503782E78083E002BB918 /* GuilleGameUITests */,
 			);
 			name = GuilleGameUITests;
 			packageProductDependencies = (

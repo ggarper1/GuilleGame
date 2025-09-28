@@ -11,7 +11,7 @@ import SwiftUI
 struct GuilleGameApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Menu()
         }
     }
 }
