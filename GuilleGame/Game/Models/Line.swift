@@ -18,7 +18,7 @@ struct Line {
     
     init(point: CGPoint, angle: CGFloat) {
         self.start = point
-        self.end = CGPoint(x: point.x + cos(angle) * 2, y: point.x + sin(angle) * 2)
+        self.end = CGPoint(x: point.x + cos(angle) * 2, y: point.y + sin(angle) * 2)
     }
     
     var length: CGFloat {

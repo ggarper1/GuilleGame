@@ -56,7 +56,6 @@ class SegmentGenerator {
         ///      2. The segment's length has a upper and lower bound (`minLength` and `maxLength`).
         ///
         var attempts = 0
-        print("Rectangle: minX: \(rect.minX), minY: \(rect.minY), maxX: \(rect.maxX), maxY: \(rect.maxY)")
         while attempts < maxAttempts {
             let angle:CGFloat = CGFloat.random(in: 0..<2*CGFloat.pi)
             
@@ -64,11 +63,8 @@ class SegmentGenerator {
             var intersection2:CGPoint? = nil
             
             let line = Line(point: start, angle: angle)
-            print("----------------------\(start)----------------------------")
-            print(String(format: "  Angle: %.2f", angle*360/(CGFloat.pi*2)))
             if angle <= CGFloat.pi/2 {
                 // Angles in this cuadrant point right and down
-                print("  Cuadrant: 1")
                 let rightSide = Line(start: CGPoint(x: rect.maxX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 let bottomSide = Line(start: CGPoint(x: rect.minX, y: rect.maxY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 
@@ -77,7 +73,6 @@ class SegmentGenerator {
                 
             } else if angle > CGFloat.pi/2 && angle <= CGFloat.pi {
                 // Angles in this cuadrant point left and down
-                print("  Cuadrant: 2")
                 let leftSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.minX, y: rect.maxY))
                 let bottomSide = Line(start: CGPoint(x: rect.minX, y: rect.maxY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 
@@ -86,7 +81,6 @@ class SegmentGenerator {
                 
             } else if angle > CGFloat.pi && angle <= 3 * CGFloat.pi/2 {
                 // Angles in this cuadrant point left and up
-                print("  Cuadrant: 3")
                 let leftSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.minX, y: rect.maxY))
                 let topSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.minY))
                 
@@ -95,7 +89,6 @@ class SegmentGenerator {
                 
             } else {
                 // Angles in this cuadrant point right and up
-                print("  Cuadrant: 4")
                 let rightSide = Line(start: CGPoint(x: rect.maxX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.maxY))
                 let topSide = Line(start: CGPoint(x: rect.minX, y: rect.minY), end: CGPoint(x: rect.maxX, y: rect.minY))
                 
@@ -105,23 +98,18 @@ class SegmentGenerator {
             
             var maxRho = maxLength
             
-            print("  \( intersection1!)")
-            print("  \( intersection2!)")
-            print(String(format: "  %.2f", maxRho))
-            
             if let i1 = intersection1 {
                 let distance1 = sqrt(pow(start.x - i1.x, 2) + pow(start.y - i1.y, 2))
                 maxRho = min(maxRho, distance1)
             }
-            print(String(format: "  %.2f", maxRho))
+
             if let i2 = intersection2 {
                 let distance2 = sqrt(pow(start.x - i2.x, 2) + pow(start.y - i2.y, 2))
                 maxRho = min(maxRho, distance2)
             }
-            print(String(format: "  %.2f", maxRho))
+
             if maxRho > minLength {
                 let rho = CGFloat.random(in: minLength...maxRho)
-                print(String(format: "  END RHO  %.2f", rho))
                 return CGPoint(x: start.x + rho * cos(angle), y: start.y + rho * sin(angle))
             }
             attempts += 1
@@ -150,6 +138,6 @@ class SegmentGenerator {
             
             return true
         }
-        return segment1.intersection(segment2)
+        return segment1.doesIntersect(with: segment2)
     }
 }

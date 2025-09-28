@@ -21,8 +21,19 @@ struct Segment {
         let dy = end.y - start.y
         return sqrt(dx * dx + dy * dy)
     }
+    
+    func isparallel(to segment:Segment) -> Bool {
+        return (self.start.x - self.end.x) * (segment.start.y - segment.end.y) - (self.start.y - self.end.y) * (segment.start.x - segment.end.x) == 0
+    }
+    
+    func contains(_ point:CGPoint) -> Bool {
+        let dist1 = sqrt(pow(self.start.x - point.x, 2) + pow(self.start.y - point.y, 2))
+        let dist2 = sqrt(pow(self.end.x - point.x, 2) + pow(self.end.y - point.y, 2))
+        
+        return dist1 <= self.length && dist2 <= self.length
+    }
 
-    func intersection(_ segment:Segment) -> Bool {
+    func doesIntersect(with segment:Segment) -> Bool {
         ///
         ///     Returns the true if two segments of a line intersect
         ///
@@ -37,11 +48,18 @@ struct Segment {
             
             return 0 <= t && t <= 1 && 0 <= u && u <= 1
         } else {
-            return false
+            // In this case segments are parallel, we must check
+            // if segments are parallel but belong to different lines:
+            if !self.isparallel(to: Segment(start: self.start, end: segment.start)) {
+                return false
+            }
+            // If this code is reached, they are in the same line and we must check if they intersect
+            return self.contains(segment.start) || self.contains(segment.end) || segment.contains(self.start) || segment.contains(self.end)
         }
     }
     
     func shortestDistance(to point:CGPoint) -> CGFloat {
+        // TODO: fix this!!
         let yDiff = self.end.y - self.start.y
         let xDiff = self.end.x - self.start.x
         
