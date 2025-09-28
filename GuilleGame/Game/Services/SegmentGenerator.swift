@@ -14,19 +14,19 @@ class SegmentGenerator {
     private let numSegments: Int
     private let minLength: CGFloat
     private let maxLength: CGFloat
-    private let minSegmentDistance: CGFloat
+    private let minSegmentSeparation: CGFloat
     private let maxAttempts: Int = 20
     
-    init(minLength: CGFloat, maxLength: CGFloat, minSegmentDistance: CGFloat = 20, numSegments: Int = 3) {
+    init(minLength: CGFloat, maxLength: CGFloat, minSegmentSeparation: CGFloat = 20, numSegments: Int = 3) {
         self.minLength = minLength
         self.maxLength = maxLength
-        self.minSegmentDistance = minSegmentDistance
+        self.minSegmentSeparation = minSegmentSeparation
         self.numSegments = numSegments
     }
     
     func generateRandomSegments(inRect rect: CGRect) -> [Segment] {
         ///
-        /// Generates `numSegments` random segments inside `rect` that are at least `minSegmentDistance` distance from each other
+        /// Generates `numSegments` random segments inside `rect` that are at least `minSegmentSeparation` distance from each other
         ///
         var segments: [Segment] = []
         let maxAttempts =  numSegments * 50
@@ -119,7 +119,7 @@ class SegmentGenerator {
     
     private func hasConflict(_ segment: Segment, _ segments: [Segment]) -> Bool {
         ///
-        /// Checks if a segment is within `minSegmentDistance` distance of any segment of  a group of segments
+        /// Checks if a segment is within `minSegmentSeparation` distance of any segment of  a group of segments
         ///
         for existingSegments in segments {
             if areasOverlap(segment, existingSegments) {
@@ -133,11 +133,8 @@ class SegmentGenerator {
         ///
         /// Checks if two segments are within areaDistance of eachother
         ///
-        if segment1.shortestDistance(to: segment2.start) <= minSegmentDistance || segment1.shortestDistance(to: segment2.end) <= minSegmentDistance ||
-            segment2.shortestDistance(to: segment1.start) <= minSegmentDistance || segment2.shortestDistance(to: segment1.end) <= minSegmentDistance {
-            
-            return true
-        }
-        return segment1.doesIntersect(with: segment2)
+        return segment1.shortestDistance(to: segment2.start) <= minSegmentSeparation || segment1.shortestDistance(to: segment2.end) <= minSegmentSeparation ||
+            segment2.shortestDistance(to: segment1.start) <= minSegmentSeparation || segment2.shortestDistance(to: segment1.end) <= minSegmentSeparation ||
+            segment1.doesIntersect(with: segment2)
     }
 }

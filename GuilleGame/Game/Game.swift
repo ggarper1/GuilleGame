@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-let minSegmentDistance: CGFloat = 10.0
+let minSegmentSeparation: CGFloat = 10.0
 let rectPadding: CGFloat = 20.0
 
 struct Game: View {
     private let segmentGenerator = SegmentGenerator(
-        minLength: 50.0,
-        maxLength: 150.0,
-        minSegmentDistance: minSegmentDistance,
-        numSegments: 3
+        minLength: 75.0,
+        maxLength: 200.0,
+        minSegmentSeparation: minSegmentSeparation,
+        numSegments: 4
     )
     
     @State private var topSegments: [Segment] = []
@@ -119,33 +119,6 @@ struct Game: View {
                         .position(segment.end)
                 }
                 
-                // Draw top line indices
-                ForEach(Array(topSegments.enumerated()), id: \.offset) { index, segment in
-                    let midPoint = CGPoint(
-                        x: (segment.start.x + segment.end.x) / 2,
-                        y: (segment.start.y + segment.end.y) / 2
-                    )
-                    
-                    Text("\(index)")
-                        .font(.title)
-                        .foregroundColor(.black)
-                        .background(Color.white.opacity(1))
-                        .position(x: midPoint.x, y: midPoint.y + 15)
-                }
-                // Draw bottom line indices
-                ForEach(Array(bottomSegments.enumerated()), id: \.offset) { index, segment in
-                    let midPoint = CGPoint(
-                        x: (segment.start.x + segment.end.x) / 2,
-                        y: (segment.start.y + segment.end.y) / 2
-                    )
-                    
-                    Text("\(index)")
-                        .font(.title)
-                        .foregroundColor(.black)
-                        .background(Color.white.opacity(1))
-                        .position(x: midPoint.x, y: midPoint.y + 15)
-                }
-                
             }
             .onAppear {
                 generateLines(topRect: topRect, bottomRect: bottomRect)
@@ -162,7 +135,7 @@ struct Game: View {
         topAreas = topSegments.map { segment in
             return SegmentArea(
                 segment,
-                minSegmentDistance * 2
+                minSegmentSeparation * 2
             )
         }
         
@@ -171,7 +144,7 @@ struct Game: View {
         bottomAreas = bottomSegments.map { segment in
             return SegmentArea(
                 segment,
-                minSegmentDistance * 2
+                minSegmentSeparation * 2
             )
         }
     }
