@@ -7,152 +7,39 @@
 
 import SwiftUI
 
-let minSegmentSeparation: CGFloat = 10.0
-let rectPadding: CGFloat = 20.0
+let numMatches = 5
+let hPlayfieldPadding = 15
+let vPlayfieldPadding = 20
 
 struct Game: View {
-    private let segmentGenerator = SegmentGenerator(
-        minLength: 75.0,
-        maxLength: 200.0,
-        minSegmentSeparation: minSegmentSeparation,
-        numSegments: 4
-    )
-    
-    @State private var topSegments: [Segment] = []
-    @State private var bottomSegments: [Segment] = []
-    @State private var topAreas: [SegmentArea] = []
-    @State private var bottomAreas: [SegmentArea] = []
+    @State var match = 0
+    let player1Color: Color = .blue
+    let player2Color: Color = .red
+    @State var matchResults: [MatchResult?] = Array(repeating: nil as MatchResult?, count: numMatches)
     
     var body: some View {
-        GeometryReader { geometry in
-            let screenHeight = geometry.size.height
-            let screenWidth = geometry.size.width
+        VStack(spacing: 0) {
+            // Score at the top
+            Score(player1Color: player1Color, player2Color: player2Color, results: matchResults)
             
-            // Calculate rectangles with padding
-            let topRect = CGRect(
-                x: rectPadding,
-                y: rectPadding,
-                width: screenWidth - (rectPadding * 2),
-                height: (screenHeight / 2) - (rectPadding * 1.5)
-            )
-            
-            let bottomRect = CGRect(
-                x: rectPadding,
-                y: (screenHeight / 2) + (rectPadding * 0.5),
-                width: screenWidth - (rectPadding * 2),
-                height: (screenHeight / 2) - (rectPadding * 1.5)
-            )
-            
-            ZStack {
-                // Draw rectangle borders for visualization
-                Rectangle()
-                    .fill(Color.clear)
-                    .stroke(Color.gray, lineWidth: 1)
-                    .frame(width: topRect.width, height: topRect.height)
-                    .position(x: topRect.midX, y: topRect.midY)
-                
-                Rectangle()
-                    .fill(Color.clear)
-                    .stroke(Color.gray, lineWidth: 1)
-                    .frame(width: bottomRect.width, height: bottomRect.height)
-                    .position(x: bottomRect.midX, y: bottomRect.midY)
-                
-                // Draw top exclusion areas
-                ForEach(Array(topAreas.enumerated()), id: \.offset) { index, area in
-                    AreaShape(area: area)
-                        .fill(Color.red.opacity(0.2))
-                        .stroke(Color.red.opacity(0.5), lineWidth: 1)
+            // Get the remaining space for playfield
+            GeometryReader { playfieldGeometry in
+                let playfieldRect = CGRect(
+                    x: hPlayfieldPadding,
+                    y: vPlayfieldPadding,
+                    width: Int(playfieldGeometry.size.width - CGFloat(2 * hPlayfieldPadding)),
+                    height: Int(playfieldGeometry.size.height - CGFloat(2 * vPlayfieldPadding))
+                )
+                Playfield(playfield: playfieldRect) { player1Won in
+                    updateScore(result: MatchResult.player1Won)
                 }
-                
-                // Draw bottom exclusion areas
-                ForEach(Array(bottomAreas.enumerated()), id: \.offset) { index, area in
-                    AreaShape(area: area)
-                        .fill(Color.green.opacity(0.2))
-                        .stroke(Color.green.opacity(0.5), lineWidth: 1)
-                }
-                
-                // Draw top lines
-                ForEach(Array(topSegments.enumerated()), id: \.offset) { index, segment in
-                    Path { path in
-                        path.move(to: segment.start)
-                        path.addLine(to: segment.end)
-                    }
-                    .stroke(Color.blue, lineWidth: 2)
-                }
-                
-                // Draw top line start/end points
-                ForEach(Array(topSegments.enumerated()), id: \.offset) { index, segment in
-                    // Start point (green circle)
-                    Circle()
-                        .fill(Color.green)
-                        .frame(width: 8, height: 8)
-                        .position(segment.start)
-                    
-                    // End point (red circle)
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 8, height: 8)
-                        .position(segment.end)
-                }
-                
-                // Draw bottom lines
-                ForEach(Array(bottomSegments.enumerated()), id: \.offset) { index, segment in
-                    Path { path in
-                        path.move(to: segment.start)
-                        path.addLine(to: segment.end)
-                    }
-                    .stroke(Color.purple, lineWidth: 2)
-                }
-                
-                // Draw bottom segments start/end points
-                ForEach(Array(bottomSegments.enumerated()), id: \.offset) { index, segment in
-                    // Start point (green circle)
-                    Circle()
-                        .fill(Color.green)
-                        .frame(width: 8, height: 8)
-                        .position(segment.start)
-                    
-                    // End point (red circle)
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 8, height: 8)
-                        .position(segment.end)
-                }
-                
-            }
-            .onAppear {
-                generateLines(topRect: topRect, bottomRect: bottomRect)
-            }
-            .onTapGesture {
-                generateLines(topRect: topRect, bottomRect: bottomRect)
             }
         }
     }
     
-    private func generateLines(topRect: CGRect, bottomRect: CGRect) {
-        // Generate lines for top rectangle
-        topSegments = segmentGenerator.generateRandomSegments(inRect: topRect)
-        topAreas = topSegments.map { segment in
-            return SegmentArea(
-                segment,
-                minSegmentSeparation * 2
-            )
-        }
-        
-        // Generate lines for bottom rectangle
-        bottomSegments = segmentGenerator.generateRandomSegments(inRect: bottomRect)
-        bottomAreas = bottomSegments.map { segment in
-            return SegmentArea(
-                segment,
-                minSegmentSeparation * 2
-            )
-        }
-    }
-}
-
-struct RandomLinesView_Previews: PreviewProvider {
-    static var previews: some View {
-        Game()
+    func updateScore(result: MatchResult) {
+        self.matchResults[self.match] = result
+        self.match += 1
     }
 }
 

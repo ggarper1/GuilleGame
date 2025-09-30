@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9955035E2E78083D002BB918 /* GuilleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GuilleGame.app; path = "/Users/guille/Documents/Projects/GuilleGame/build/Debug-iphoneos/GuilleGame.app"; sourceTree = "<absolute>"; };
-		9955036B2E78083E002BB918 /* GuilleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GuilleGameTests.xctest; path = "/Users/guille/Documents/Projects/GuilleGame/build/Debug-iphoneos/GuilleGame.app/PlugIns/GuilleGameTests.xctest"; sourceTree = "<absolute>"; };
-		995503752E78083E002BB918 /* GuilleGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GuilleGameUITests.xctest; path = "/Users/guille/Documents/Projects/GuilleGame/build/Debug-iphoneos/GuilleGameUITests-Runner.app/PlugIns/GuilleGameUITests.xctest"; sourceTree = "<absolute>"; };
+		99495D822E8BEE1F003EAAB2 /* GuilleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuilleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99495D832E8BEE1F003EAAB2 /* GuilleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GuilleGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99495D842E8BEE1F003EAAB2 /* GuilleGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GuilleGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -66,6 +66,9 @@
 			isa = PBXGroup;
 			children = (
 				995503602E78083D002BB918 /* GuilleGame */,
+				99495D822E8BEE1F003EAAB2 /* GuilleGame.app */,
+				99495D832E8BEE1F003EAAB2 /* GuilleGameTests.xctest */,
+				99495D842E8BEE1F003EAAB2 /* GuilleGameUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,7 +94,7 @@
 			packageProductDependencies = (
 			);
 			productName = GuilleGame;
-			productReference = 9955035E2E78083D002BB918 /* GuilleGame.app */;
+			productReference = 99495D822E8BEE1F003EAAB2 /* GuilleGame.app */;
 			productType = "com.apple.product-type.application";
 		};
 		9955036A2E78083E002BB918 /* GuilleGameTests */ = {
@@ -111,7 +114,7 @@
 			packageProductDependencies = (
 			);
 			productName = GuilleGameTests;
-			productReference = 9955036B2E78083E002BB918 /* GuilleGameTests.xctest */;
+			productReference = 99495D832E8BEE1F003EAAB2 /* GuilleGameTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		995503742E78083E002BB918 /* GuilleGameUITests */ = {
@@ -131,7 +134,7 @@
 			packageProductDependencies = (
 			);
 			productName = GuilleGameUITests;
-			productReference = 995503752E78083E002BB918 /* GuilleGameUITests.xctest */;
+			productReference = 99495D842E8BEE1F003EAAB2 /* GuilleGameUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */

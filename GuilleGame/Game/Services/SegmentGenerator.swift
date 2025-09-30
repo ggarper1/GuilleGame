@@ -137,4 +137,23 @@ class SegmentGenerator {
             segment2.shortestDistance(to: segment1.start) <= minSegmentSeparation || segment2.shortestDistance(to: segment1.end) <= minSegmentSeparation ||
             segment1.doesIntersect(with: segment2)
     }
+    
+    public func addPiece(segments:[Segment], rect:CGRect) -> CGPoint {
+        var attempts = 0
+        while attempts < maxAttempts {
+            let point = CGPoint(x: CGFloat.random(in: rect.minX...rect.maxX), y: CGFloat.random(in: rect.minY...rect.maxY))
+            var isValid = true
+            for segment in segments {
+                if segment.shortestDistance(to: point) < minSegmentSeparation {
+                    isValid = false
+                    break
+                }
+            }
+            if isValid {
+                return point
+            }
+            attempts += 1
+        }
+        return .zero
+    }
 }
