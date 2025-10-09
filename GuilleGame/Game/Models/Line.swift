@@ -46,6 +46,23 @@ struct Line {
         return CGPoint(x: xNumerator/denominator, y: yNumerator/denominator)
     }
     
+    func intersection(with segment:Segment) -> CGPoint? {
+        ///
+        ///     Returns the intersection point of a infinite line with a segment if it exists
+        ///
+        let denominator:CGFloat = (self.start.x - self.end.x) * (segment.start.y - segment.end.y) - (self.start.y - self.end.y) * (segment.start.x - segment.end.x)
+        if denominator == 0 {
+            return nil
+        }
+        
+        let xNumerator:CGFloat = (self.start.x * self.end.y - self.start.y * self.end.x) * (segment.start.x - segment.end.x) - (self.start.x - self.end.x) * (segment.start.x * segment.end.y - segment.start.y * segment.end.x)
+        let yNumerator:CGFloat = (self.start.x * self.end.y - self.start.y * self.end.x) * (segment.start.y - segment.end.y) - (self.start.y - self.end.y) * (segment.start.x * segment.end.y - segment.start.y * segment.end.x)
+        
+        let point = CGPoint(x: xNumerator/denominator, y: yNumerator/denominator)
+        if segment.contains(point) { return point }
+        return nil
+    }
+    
     func shortestDistance(to point:CGPoint) -> CGFloat {
         let yDiff = self.end.y - self.start.y
         let xDiff = self.end.x - self.start.x
