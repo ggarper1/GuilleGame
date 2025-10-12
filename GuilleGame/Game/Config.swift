@@ -10,9 +10,9 @@ import Foundation
 struct Config {
     
     // MARK: piece view parameters
-    static let pieceRadius: CGFloat = 5
+    static let pieceRadius: CGFloat = 2
     
     // MARK: piece FOV parameeters
     static let reachFOV: CGFloat = 400
-    static let semiangleFOV: CGFloat = 2 * (CGFloat.pi * 2)/360
+    static let semiangleFOV: CGFloat = 20 * (CGFloat.pi * 2)/360
 }
