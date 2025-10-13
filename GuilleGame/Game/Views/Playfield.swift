@@ -202,8 +202,8 @@ struct Playfield: View {
     
     public func refresh() {
         generateSegments(topRect: topLineRect, bottomRect: bottomLineRect)
-        topKing = segmentGenerator.addPiece(segments: topSegments, rect: topLineRect)
-        bottomKing = segmentGenerator.addPiece(segments: bottomSegments, rect: bottomLineRect)
+        topKing = segmentGenerator.createKingPiece(segments: topSegments, rect: topLineRect)
+        bottomKing = segmentGenerator.createKingPiece(segments: bottomSegments, rect: bottomLineRect)
         
         topPieces = []
         bottomPieces = []
