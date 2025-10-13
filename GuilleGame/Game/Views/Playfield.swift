@@ -10,47 +10,46 @@ let maxLength: CGFloat = 200.0
 let lineGenerationAreaPadding: CGFloat = 0.05
 
 // MARK: Line display parameters
-let segmentWidth: CGFloat = 3.0
 let pieceRadius: CGFloat = 5.0
 let userDotRadius: CGFloat = 3.0
 
 struct Playfield: View {
-    private let player1Color: Color = .blue
-    private let player2Color: Color = .red
-    private let lineColor: Color = .black
-    
     private let playfield: CGRect
-    private let lineRectPadding :CGFloat
+    private let lineRectPadding: CGFloat
     
     private let segmentGenerator = SegmentGenerator(
-        minLength: minLength,
-        maxLength: maxLength,
-        minSegmentSeparation: minSegmentSeparation,
-        numSegments: 4
+        minLength: Config.minSegementLength,
+        maxLength: Config.maxSegmentLength,
+        minSegmentSeparation: Config.minSegmentSeparation,
+        numSegments: Config.numSegments
     )
     
     var updateScore: ((MatchResult) -> Void)?
     
+    // MARK: Top player elements
     @State private var topPlayField: CGRect = .zero
-    @State private var bottomPlayField: CGRect = .zero
     @State private var topLineRect: CGRect = .zero
-    @State private var bottomLineRect: CGRect = .zero
     @State private var topSegments: [Segment] = []
-    @State private var bottomSegments: [Segment] = []
     @State private var topAreas: [SegmentArea] = []
-    @State private var bottomAreas: [SegmentArea] = []
     
     @State private var topKing: CGPoint = .zero
-    @State private var bottomKing: CGPoint = .zero
-    
     @State private var topPieces: [Piece] = []
+    
+    // MARK: Bottom player elements
+    @State private var bottomPlayField: CGRect = .zero
+    @State private var bottomLineRect: CGRect = .zero
+    @State private var bottomSegments: [Segment] = []
+    @State private var bottomAreas: [SegmentArea] = []
+    
+    @State private var bottomKing: CGPoint = .zero
     @State private var bottomPieces: [Piece] = []
     
+    // MARK: Player action control state
     @State private var isPlacingTopDots: Bool = true
     @State private var isPlacingBottomDots: Bool = false
     @State private var gameComplete: Bool = false
     
-    // Angle control state
+    // MARK: Angle control state
     @State private var tempPiecePosition: CGPoint? = nil
     @State private var tempPieceAngle: CGFloat = .zero
     @State private var isDraggingAngle: Bool = false
@@ -64,59 +63,80 @@ struct Playfield: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
+                // So you can tap anywhere
                 Rectangle()
                     .fill(Color.clear)
                     .contentShape(Rectangle())
                 
+                // Top Playfield rectangle
                 Rectangle()
                     .fill(Color.clear)
-                    .stroke(isPlacingTopDots ? Color.blue.opacity(0.5) : Color.gray, lineWidth: isPlacingTopDots ? 2 : 1)
-                    .frame(width: topPlayField.width, height: topPlayField.height)
-                    .position(x: topPlayField.midX, y: topPlayField.midY)
+                    .stroke(
+                        isPlacingTopDots ? Color.blue.opacity(0.5) : Color.gray,
+                        lineWidth: isPlacingTopDots ? 2 : 1)
+                    .frame(
+                        width: topPlayField.width,
+                        height: topPlayField.height)
+                    .position(
+                        x: topPlayField.midX,
+                        y: topPlayField.midY)
                 
+                // Bottom Playfield rectangle
                 Rectangle()
                     .fill(Color.clear)
-                    .stroke(isPlacingBottomDots ? Color.red.opacity(0.5) : Color.gray, lineWidth: isPlacingBottomDots ? 2 : 1)
-                    .frame(width: bottomPlayField.width, height: bottomPlayField.height)
-                    .position(x: bottomPlayField.midX, y: bottomPlayField.midY)
+                    .stroke(
+                        isPlacingBottomDots ? Color.red.opacity(0.5) : Color.gray,
+                        lineWidth: isPlacingBottomDots ? 2 : 1)
+                    .frame(
+                            width: bottomPlayField.width,
+                           height: bottomPlayField.height)
+                    .position(
+                        x: bottomPlayField.midX,
+                        y: bottomPlayField.midY)
                 
+                // Draw top segments
                 ForEach(Array(topSegments.enumerated()), id: \.offset) { index, segment in
                     Path { path in
                         path.move(to: segment.start)
                         path.addLine(to: segment.end)
                     }
-                    .stroke(lineColor, lineWidth: segmentWidth)
+                    .stroke(Config.segmentColor, lineWidth: Config.segmentWidth)
                 }
                 
+                // Draw bottom segments
                 ForEach(Array(bottomSegments.enumerated()), id: \.offset) { index, segment in
                     Path { path in
                         path.move(to: segment.start)
                         path.addLine(to: segment.end)
                     }
-                    .stroke(lineColor, lineWidth: segmentWidth)
+                    .stroke(Config.segmentColor, lineWidth: Config.segmentWidth)
                 }
                 
+                // Draw top king
                 Circle()
-                    .fill(player1Color)
+                    .fill(Config.player1Color)
                     .frame(width: pieceRadius * 2, height: pieceRadius * 2)
                     .position(topKing)
                 
+                // Draw bottom king
                 Circle()
-                    .fill(player2Color)
+                    .fill(Config.player2Color)
                     .frame(width: pieceRadius * 2, height: pieceRadius * 2)
                     .position(bottomKing)
                 
+                // Draw top piece views
                 ForEach(Array(topPieces.enumerated()), id: \.offset) { index, piece in
-                    PieceView(piece: piece, segments: topSegments + bottomSegments, color: player1Color)
+                    PieceView(piece: piece, segments: topSegments + bottomSegments, color: Config.player1Color)
                 }
                 
+                // Draw bottom piece views
                 ForEach(Array(bottomPieces.enumerated()), id: \.offset) { index, piece in
-                    PieceView(piece: piece, segments: topSegments + bottomSegments, color: player2Color)
+                    PieceView(piece: piece, segments: topSegments + bottomSegments, color: Config.player2Color)
                 }
                 
                 // Draw temporary piece with PieceView
                 if let pos = tempPiecePosition {
-                    let currentColor = isPlacingTopDots ? player1Color : player2Color
+                    let currentColor = isPlacingTopDots ? Config.player1Color : Config.player2Color
                     let tempPiece = Piece(position: pos, angle: tempPieceAngle)
                     
                     PieceView(piece: tempPiece, segments: topSegments + bottomSegments, color: currentColor)
@@ -140,6 +160,7 @@ struct Playfield: View {
         }
     }
     
+    // MARK: Preparing Playfield and Segment generation
     private func createRects() {
         topPlayField = CGRect(
             x: playfield.minX,
@@ -167,7 +188,7 @@ struct Playfield: View {
         )
     }
     
-    public func generateLines(topRect: CGRect, bottomRect: CGRect) {
+    public func generateSegments(topRect: CGRect, bottomRect: CGRect) {
         topSegments = segmentGenerator.generateRandomSegments(inRect: topRect)
         topAreas = topSegments.map { segment in
             return SegmentArea(segment, minSegmentSeparation * 2)
@@ -180,7 +201,7 @@ struct Playfield: View {
     }
     
     public func refresh() {
-        generateLines(topRect: topLineRect, bottomRect: bottomLineRect)
+        generateSegments(topRect: topLineRect, bottomRect: bottomLineRect)
         topKing = segmentGenerator.addPiece(segments: topSegments, rect: topLineRect)
         bottomKing = segmentGenerator.addPiece(segments: bottomSegments, rect: bottomLineRect)
         
@@ -193,103 +214,71 @@ struct Playfield: View {
         isDraggingAngle = false
     }
     
+    // MARK: Piece placement
     private func handleDrag(at location: CGPoint, isEnded: Bool) {
         guard !gameComplete else { return }
         
         if isPlacingTopDots {
-            // Allow initial placement only in top playfield, but allow dragging anywhere for angle
             if tempPiecePosition == nil && !topPlayField.contains(location) {
                 return
             }
-            handleTopPiecePlacement(at: location, isEnded: isEnded)
+            handlePiecePlacement(at: location, isEnded: isEnded)
         } else if isPlacingBottomDots {
-            // Allow initial placement only in bottom playfield, but allow dragging anywhere for angle
             if tempPiecePosition == nil && !bottomPlayField.contains(location) {
                 return
             }
-            handleBottomPiecePlacement(at: location, isEnded: isEnded)
+            handlePiecePlacement(at: location, isEnded: isEnded)
         }
     }
     
-    private func handleTopPiecePlacement(at location: CGPoint, isEnded: Bool) {
+    private func handlePiecePlacement(at location: CGPoint, isEnded: Bool) {
         if tempPiecePosition == nil {
-            if isValidPosition(location, inRect: topPlayField, segments: topSegments, king: topKing) {
-                tempPiecePosition = location
-                tempPieceAngle = .zero
-                isDraggingAngle = false
+            if isPlacingTopDots && isValidPosition(location, inRect: topPlayField, segments: topSegments, king: topKing) {
+                    tempPiecePosition = location
+                    tempPieceAngle = .zero
+                    isDraggingAngle = false
+                
+            } else if isValidPosition(location, inRect: bottomPlayField, segments: bottomSegments, king: bottomKing) {
+                    tempPiecePosition = location
+                    tempPieceAngle = .zero
+                    isDraggingAngle = false
             }
-        } else {
-            if let startPos = tempPiecePosition {
-                let dx = location.x - startPos.x
-                let dy = location.y - startPos.y
-                let distance = sqrt(dx * dx + dy * dy)
-                
-                if distance > 5 {
-                    isDraggingAngle = true
-                    tempPieceAngle = atan2(dy, dx)
-                }
-                
-                if isEnded {
-                    let newPiece = Piece(position: startPos, angle: tempPieceAngle)
+        } else if let startPos = tempPiecePosition {
+            let dx = location.x - startPos.x
+            let dy = location.y - startPos.y
+            let distance = sqrt(dx * dx + dy * dy)
+            
+            if distance > 5 {
+                isDraggingAngle = true
+                tempPieceAngle = atan2(dy, dx)
+            }
+            
+            if isEnded {
+                let newPiece = Piece(position: startPos, angle: tempPieceAngle)
+                if isPlacingTopDots {
                     topPieces.append(newPiece)
-                    
-                    tempPiecePosition = nil
-                    isDraggingAngle = false
-                    
-                    if topPieces.count == 3 {
-                        isPlacingTopDots = false
-                        isPlacingBottomDots = true
-                    }
-                }
-            }
-        }
-    }
-    
-    private func handleBottomPiecePlacement(at location: CGPoint, isEnded: Bool) {
-        if tempPiecePosition == nil {
-            if isValidPosition(location, inRect: bottomPlayField, segments: bottomSegments, king: bottomKing) {
-                tempPiecePosition = location
-                tempPieceAngle = .zero
-                isDraggingAngle = false
-            }
-        } else {
-            if let startPos = tempPiecePosition {
-                let dx = location.x - startPos.x
-                let dy = location.y - startPos.y
-                let distance = sqrt(dx * dx + dy * dy)
-                
-                if distance > 5 {
-                    isDraggingAngle = true
-                    tempPieceAngle = atan2(dy, dx)
-                }
-                
-                if isEnded {
-                    let newPiece = Piece(position: startPos, angle: tempPieceAngle)
+                } else {
                     bottomPieces.append(newPiece)
-                    
-                    tempPiecePosition = nil
-                    isDraggingAngle = false
-                    
-                    if bottomPieces.count == 3 {
-                        isPlacingBottomDots = false
-                        gameComplete = true
-                        checkWinCondition(
-                            topSegments: self.topSegments,
-                            topPieces: self.topPieces,
-                            topKing: self.topKing,
-                            bottomSegments: self.bottomSegments,
-                            bottomPieces: self.bottomPieces,
-                            bottomKing: self.bottomKing
-                        )
-                    }
+                }
+                
+                tempPiecePosition = nil
+                isDraggingAngle = false
+                
+                if isPlacingTopDots && topPieces.count == 3 {
+                    isPlacingTopDots = false
+                    isPlacingBottomDots = true
+                } else if bottomPieces.count == 3 {
+                    isPlacingBottomDots = false
+                    gameComplete = true
+                    checkWinCondition()
                 }
             }
         }
     }
     
     private func isValidPosition(_ point: CGPoint, inRect rect: CGRect, segments: [Segment], king: CGPoint) -> Bool {
-        let distance = sqrt(pow(point.x - king.x, 2) + pow(point.y - king.y, 2))
-        if distance < (pieceRadius + userDotRadius + 5) {
+        let distance = distance(p1: point, p2: king)
+        if distance < (pieceRadius + userDotRadius + Config.minDistanceFromKing) {
             return false
         }
         
@@ -302,9 +291,7 @@ struct Playfield: View {
         return true
     }
     
-    private func checkWinCondition(
-        topSegments: [Segment], topPieces: [Piece], topKing: CGPoint,
-        bottomSegments: [Segment], bottomPieces: [Piece], bottomKing: CGPoint) {
+    private func checkWinCondition() {
         let result = MatchResult.player1Won
         updateScore?(result)
         refresh()

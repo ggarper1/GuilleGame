@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-private struct SegmentPoint {
-    let angle: CGFloat
-    let distance: CGFloat
-    let point: CGPoint
-    let segmentIdx: Int
-    let leftMost: Bool
-}
-
 struct PieceView: View {
     @State var piece: Piece
     @State var segments: [Segment]
