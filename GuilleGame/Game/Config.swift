@@ -35,5 +35,5 @@ struct Config {
     
     // MARK: PieceView FOV parameeters
     static let reachFOV: CGFloat = 400
-    static let semiangleFOV: CGFloat = 20 * (CGFloat.pi * 2)/360
+    static let semiAngleFOV: CGFloat = 20 * (CGFloat.pi * 2)/360
 }

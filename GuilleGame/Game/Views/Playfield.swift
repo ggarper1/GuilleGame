@@ -16,6 +16,7 @@ let userDotRadius: CGFloat = 3.0
 struct Playfield: View {
     private let playfield: CGRect
     private let lineRectPadding: CGFloat
+    private var winner: Int?
     
     private let segmentGenerator = SegmentGenerator(
         minLength: Config.minSegementLength,
@@ -54,10 +55,11 @@ struct Playfield: View {
     @State private var tempPieceAngle: CGFloat = .zero
     @State private var isDraggingAngle: Bool = false
     
-    init(playfield: CGRect, updateScore: ((MatchResult) -> Void)? = nil) {
+    init(playfield: CGRect, winner: Int?, updateScore: ((MatchResult) -> Void)? = nil) {
         self.playfield = playfield
         self.lineRectPadding = lineGenerationAreaPadding * playfield.width
         self.updateScore = updateScore
+        self.winner = winner
     }
     
     var body: some View {
@@ -202,8 +204,8 @@ struct Playfield: View {
     
     public func refresh() {
         generateSegments(topRect: topLineRect, bottomRect: bottomLineRect)
-        topKing = segmentGenerator.createKingPiece(segments: topSegments, rect: topLineRect)
-        bottomKing = segmentGenerator.createKingPiece(segments: bottomSegments, rect: bottomLineRect)
+        topKing = segmentGenerator.createKingPiece(segments: topSegments, rect: topLineRect, isTop: true)
+        bottomKing = segmentGenerator.createKingPiece(segments: bottomSegments, rect: bottomLineRect, isTop: false)
         
         topPieces = []
         bottomPieces = []
@@ -292,11 +294,99 @@ struct Playfield: View {
     }
     
     private func checkWinCondition() {
-        let result = MatchResult.player1Won
+        let allSegments = topSegments + bottomSegments
+        
+        var topHits: [[Bool]] = Array(repeating:
+            Array(repeating: false, count: topPieces.count),
+            count:  topPieces.count)
+        for idx1 in topPieces.indices {
+            for idx2 in bottomPieces.indices {
+                topHits[idx1][idx2] =  topPieces[idx1].doesHit(point: bottomPieces[idx2].position, segments: allSegments)
+            }
+        }
+        
+        var bottomHits: [[Bool]] = Array(repeating:
+            Array(repeating: false, count: topPieces.count),
+            count:  topPieces.count)
+        for idx1 in bottomPieces.indices {
+            for idx2 in topPieces.indices {
+                bottomHits[idx1][idx2] =  bottomPieces[idx1].doesHit(point: topPieces[idx2].position, segments: allSegments)
+            }
+        }
+        
+        var topAssignation: [(Int, Int)] = []
+        for (idx1, row) in topHits.enumerated() {
+            for (idx2, item) in row.enumerated() {
+                if item && !topAssignation.map({$0.1}).contains(idx2) {
+                    topAssignation.append((idx1, idx2))
+                    break
+                }
+            }
+        }
+        var bottomAssignation: [(Int, Int)] = []
+        for (idx1, row) in bottomHits.enumerated() {
+            for (idx2, item) in row.enumerated() {
+                if item && !bottomAssignation.map({$0.1}).contains(idx2) {
+                    bottomAssignation.append((idx1, idx2))
+                    break
+                }
+            }
+            
+        }
+        
+        let killedTops: [Int] = bottomAssignation.map({ $0.1 })
+        let killedBottoms: [Int] = topAssignation.map({ $0.1 })
+        
+        let remainingTops: [Int] = topPieces.indices.filter({!killedTops.contains($0)})
+        let remainingBottoms: [Int] = topPieces.indices.filter({!killedBottoms.contains($0)})
+        
+        var bottomKingDead = false
+        for idx in remainingTops {
+            if topPieces[idx].doesHit(point: bottomKing, segments: allSegments) {
+                bottomKingDead = true
+            }
+        }
+        var topKingDead = false
+        for idx in remainingBottoms {
+            if bottomPieces[idx].doesHit(point: topKing, segments: allSegments) {
+                topKingDead = true
+            }
+        }
+        print("\n-----------------------------------------")
+        print("Top matrix")
+        for row in topHits {
+            print(row)
+        }
+        print("Bottom matrix")
+        for row in bottomHits {
+            print(row)
+        }
+        print("Top assignations: \(topAssignation)")
+        print("Bottom sssignations: \(bottomAssignation)")
+        print("Killed tops: \(killedTops)")
+        print("Killed bottoms: \(killedBottoms)")
+        
+        print("Remaining tops: \(remainingTops)")
+        print("Remaining bottoms: \(remainingBottoms)")
+        
+        print(topKingDead)
+        print(bottomKingDead)
+        
+        var result = MatchResult.player1Won
+        if (topKingDead && bottomKingDead) ||  !topKingDead && !bottomKingDead {
+           result = MatchResult.tie
+        } else if topKingDead {
+            result = MatchResult.player2Won
+        }
+        print(result)
         updateScore?(result)
-        refresh()
+        if(winner == nil){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
+                refresh()
+            }
+        }
     }
 }
 #Preview {
-    Playfield(playfield: CGRect(x: 20, y: 20, width: 366, height: 700))
+    Playfield(playfield: CGRect(x: 20, y: 20, width: 366, height: 700), winner: nil)
 }

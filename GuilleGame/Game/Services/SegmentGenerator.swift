@@ -138,10 +138,12 @@ class SegmentGenerator {
             segment1.doesIntersect(with: segment2)
     }
     
-    public func createKingPiece(segments:[Segment], rect:CGRect) -> CGPoint {
+    public func createKingPiece(segments:[Segment], rect:CGRect, isTop:Bool) -> CGPoint {
         var attempts = 0
         while attempts < maxAttempts {
-            let visibility = CGPoint(x: CGFloat.random(in: rect.minX...rect.maxX), y: rect.maxY)
+            let visibility = isTop ?
+                CGPoint(x: CGFloat.random(in: rect.minX...rect.maxX), y: rect.maxY) :
+                CGPoint(x: CGFloat.random(in: rect.minX...rect.maxX), y: rect.minY)
             let point = CGPoint(x: CGFloat.random(in: rect.minX...rect.maxX), y: CGFloat.random(in: rect.minY...rect.maxY))
             var isValid = true
             for segment in segments {
@@ -152,9 +154,9 @@ class SegmentGenerator {
             }
             if isValid {
                 let line = Line(start: visibility, end: point)
-                var isVisible = false
+                var isVisible = true
                 for segment in segments {
-                    isVisible = isVisible || line.intersection(with: segment) != nil
+                    isVisible = isVisible && line.intersection(with: segment) == nil
                 }
                 if isVisible {
                     return point

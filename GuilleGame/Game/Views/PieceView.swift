@@ -29,8 +29,8 @@ struct PieceView: View {
         path.addArc(
             center: piece.position,
             radius: 400,
-            startAngle: Angle(radians: piece.angle - Config.semiangleFOV),
-            endAngle: Angle(radians: piece.angle + Config.semiangleFOV),
+            startAngle: Angle(radians: piece.angle - Config.semiAngleFOV),
+            endAngle: Angle(radians: piece.angle + Config.semiAngleFOV),
             clockwise: false)
         path.closeSubpath()
         return path
