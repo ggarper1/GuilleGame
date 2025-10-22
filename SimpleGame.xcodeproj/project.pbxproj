@@ -24,15 +24,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		99495D822E8BEE1F003EAAB2 /* GuilleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuilleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		99495D832E8BEE1F003EAAB2 /* GuilleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GuilleGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		99495D842E8BEE1F003EAAB2 /* GuilleGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GuilleGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99495D822E8BEE1F003EAAB2 /* SimpleGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		99495D832E8BEE1F003EAAB2 /* SimpleGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99495D842E8BEE1F003EAAB2 /* SimpleGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		995503602E78083D002BB918 /* GuilleGame */ = {
+		995503602E78083D002BB918 /* SimpleGame */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = GuilleGame;
+			path = SimpleGame;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -65,19 +65,19 @@
 		995503552E78083D002BB918 = {
 			isa = PBXGroup;
 			children = (
-				995503602E78083D002BB918 /* GuilleGame */,
-				99495D822E8BEE1F003EAAB2 /* GuilleGame.app */,
-				99495D832E8BEE1F003EAAB2 /* GuilleGameTests.xctest */,
-				99495D842E8BEE1F003EAAB2 /* GuilleGameUITests.xctest */,
+				995503602E78083D002BB918 /* SimpleGame */,
+				99495D822E8BEE1F003EAAB2 /* SimpleGame.app */,
+				99495D832E8BEE1F003EAAB2 /* SimpleGameTests.xctest */,
+				99495D842E8BEE1F003EAAB2 /* SimpleGameUITests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9955035D2E78083D002BB918 /* GuilleGame */ = {
+		9955035D2E78083D002BB918 /* SimpleGame */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9955037F2E78083E002BB918 /* Build configuration list for PBXNativeTarget "GuilleGame" */;
+			buildConfigurationList = 9955037F2E78083E002BB918 /* Build configuration list for PBXNativeTarget "SimpleGame" */;
 			buildPhases = (
 				9955035A2E78083D002BB918 /* Sources */,
 				9955035B2E78083D002BB918 /* Frameworks */,
@@ -88,18 +88,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				995503602E78083D002BB918 /* GuilleGame */,
+				995503602E78083D002BB918 /* SimpleGame */,
 			);
-			name = GuilleGame;
+			name = SimpleGame;
 			packageProductDependencies = (
 			);
 			productName = GuilleGame;
-			productReference = 99495D822E8BEE1F003EAAB2 /* GuilleGame.app */;
+			productReference = 99495D822E8BEE1F003EAAB2 /* SimpleGame.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9955036A2E78083E002BB918 /* GuilleGameTests */ = {
+		9955036A2E78083E002BB918 /* SimpleGameTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 995503822E78083E002BB918 /* Build configuration list for PBXNativeTarget "GuilleGameTests" */;
+			buildConfigurationList = 995503822E78083E002BB918 /* Build configuration list for PBXNativeTarget "SimpleGameTests" */;
 			buildPhases = (
 				995503672E78083E002BB918 /* Sources */,
 				995503682E78083E002BB918 /* Frameworks */,
@@ -110,16 +110,16 @@
 			dependencies = (
 				9955036D2E78083E002BB918 /* PBXTargetDependency */,
 			);
-			name = GuilleGameTests;
+			name = SimpleGameTests;
 			packageProductDependencies = (
 			);
 			productName = GuilleGameTests;
-			productReference = 99495D832E8BEE1F003EAAB2 /* GuilleGameTests.xctest */;
+			productReference = 99495D832E8BEE1F003EAAB2 /* SimpleGameTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		995503742E78083E002BB918 /* GuilleGameUITests */ = {
+		995503742E78083E002BB918 /* SimpleGameUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 995503852E78083E002BB918 /* Build configuration list for PBXNativeTarget "GuilleGameUITests" */;
+			buildConfigurationList = 995503852E78083E002BB918 /* Build configuration list for PBXNativeTarget "SimpleGameUITests" */;
 			buildPhases = (
 				995503712E78083E002BB918 /* Sources */,
 				995503722E78083E002BB918 /* Frameworks */,
@@ -130,11 +130,11 @@
 			dependencies = (
 				995503772E78083E002BB918 /* PBXTargetDependency */,
 			);
-			name = GuilleGameUITests;
+			name = SimpleGameUITests;
 			packageProductDependencies = (
 			);
 			productName = GuilleGameUITests;
-			productReference = 99495D842E8BEE1F003EAAB2 /* GuilleGameUITests.xctest */;
+			productReference = 99495D842E8BEE1F003EAAB2 /* SimpleGameUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -174,9 +174,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9955035D2E78083D002BB918 /* GuilleGame */,
-				9955036A2E78083E002BB918 /* GuilleGameTests */,
-				995503742E78083E002BB918 /* GuilleGameUITests */,
+				9955035D2E78083D002BB918 /* SimpleGame */,
+				9955036A2E78083E002BB918 /* SimpleGameTests */,
+				995503742E78083E002BB918 /* SimpleGameUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -232,12 +232,12 @@
 /* Begin PBXTargetDependency section */
 		9955036D2E78083E002BB918 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9955035D2E78083D002BB918 /* GuilleGame */;
+			target = 9955035D2E78083D002BB918 /* SimpleGame */;
 			targetProxy = 9955036C2E78083E002BB918 /* PBXContainerItemProxy */;
 		};
 		995503772E78083E002BB918 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9955035D2E78083D002BB918 /* GuilleGame */;
+			target = 9955035D2E78083D002BB918 /* SimpleGame */;
 			targetProxy = 995503762E78083E002BB918 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -435,7 +435,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GuilleGame.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GuilleGame";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleGame.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SimpleGame";
 			};
 			name = Debug;
 		};
@@ -454,7 +454,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GuilleGame.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GuilleGame";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleGame.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SimpleGame";
 			};
 			name = Release;
 		};
@@ -504,7 +504,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9955037F2E78083E002BB918 /* Build configuration list for PBXNativeTarget "GuilleGame" */ = {
+		9955037F2E78083E002BB918 /* Build configuration list for PBXNativeTarget "SimpleGame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				995503802E78083E002BB918 /* Debug */,
@@ -513,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		995503822E78083E002BB918 /* Build configuration list for PBXNativeTarget "GuilleGameTests" */ = {
+		995503822E78083E002BB918 /* Build configuration list for PBXNativeTarget "SimpleGameTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				995503832E78083E002BB918 /* Debug */,
@@ -522,7 +522,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		995503852E78083E002BB918 /* Build configuration list for PBXNativeTarget "GuilleGameUITests" */ = {
+		995503852E78083E002BB918 /* Build configuration list for PBXNativeTarget "SimpleGameUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				995503862E78083E002BB918 /* Debug */,
